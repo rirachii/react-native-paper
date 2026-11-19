@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Platform, StyleSheet, Text } from 'react-native';
-import type { ColorValue, Role, ViewProps } from 'react-native';
+import type { ColorValue, ViewProps } from 'react-native';
 
 import { black } from '../theme/colors';
 
@@ -15,19 +15,19 @@ export type IconProps = {
 
 type AccessibilityProps =
   | {
-      role?: Role;
-      focusable?: boolean;
+      'aria-hidden': boolean;
     }
   | {
       accessibilityElementsHidden?: boolean;
       importantForAccessibility?: 'auto' | 'yes' | 'no' | 'no-hide-descendants';
     };
 
+// Icons are decorative: the component that shows one names it, so assistive
+// technology skips the icon itself on every platform.
 export const accessibilityProps: AccessibilityProps =
   Platform.OS === 'web'
     ? {
-        role: 'img',
-        focusable: false,
+        'aria-hidden': true,
       }
     : {
         accessibilityElementsHidden: true,
